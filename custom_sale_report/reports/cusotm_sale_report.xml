@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_custom_sale_report_wizard" model="ir.actions.report">
+        <field name="name">Custom Sale Report</field>
+        <field name="model">custom.sale.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">custom_sale_report.action_custom_sale_report_wizard</field>
+        <field name="report_file">custom_sale_report.report.action_custom_sale_report_wizard</field>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_report_pdf" model="ir.actions.report">
+        <field name="name">Custom Sale Report PDF</field>
+        <field name="model">custom.sale.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_sale_report.report_action_report_pdf</field>
+        <field name="report_file">custom_sale_report.report_action_report_pdf</field>
+        <field name="binding_model_id" ref="model_custom_sale_report"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+</odoo>

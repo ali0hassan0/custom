@@ -1,0 +1,22 @@
+<odoo>
+    <template id="hospital_webpage">
+        <t t-call="website.layout">
+            <t t-set="title">Hospital Management</t>
+            <div class="oe_structure">
+                <div class="container">
+                    <t t-foreach="patients" t-as="patient">
+                        <ul>
+                            <li>
+                                <t t-esc="patient.name"/>
+                            </li>
+                        </ul>
+                    </t>
+                </div>
+
+            </div>
+        </t>
+        
+    </template>
+
+
+</odoo>

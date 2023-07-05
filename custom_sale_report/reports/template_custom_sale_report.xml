@@ -1,0 +1,141 @@
+<odoo>
+    <data>
+        <template id="report_action_report_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h1 class="text-center">Sale --Group By Invoices</h1>
+                        <t t-foreach="dates" t-as="date">
+                            <h4>
+                                <strong>Date From :
+                                    <t t-esc="date.get('date_from')"/>
+                                </strong>
+                            </h4>
+                            <h4>
+                                <strong>
+                                    Date To:
+                                    <t t-esc="date.get('date_to')"/>
+                                </strong>
+                            </h4>
+                            <h4>
+                                <t t-if="date.get('customer')">
+                                    Customer:
+                                    <span style="white-space: nowrap;">
+                                        <t t-esc="date.get('customer')"/>
+                                    </span>
+                                </t>
+                                <t t-if="date.get('salesperosn')">
+                                    Salesperson:
+                                    <span style="white-space: nowrap;">
+                                        <t t-esc="date.get('salesperosn')"/>
+                                    </span>
+                                </t>
+                            </h4>
+                        </t>
+
+                        <style>
+                            .report-table th,
+                            .report-table td {
+                            text-align: left;
+                            padding: 5px;
+                            border: 1px solid black;
+                            word-wrap: break-word;
+                            max-width: 150px;
+                            }
+
+                            .report-table td {
+                            text-align: left;
+                            padding: 5px;
+                            border: 1px solid black;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            }
+
+                        </style>
+
+                        <table class="table table-condensed report-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">Cust No</th>
+                                    <th style="width: 400px;">Customer</th>
+                                    <th style="width: 80px;">Bill no</th>
+                                    <th style="width: 80px;">Date</th>
+                                    <th style="width: 80px;">Total</th>
+                                    <th style="width: 80px;">Invoice disc</th>
+                                    <th style="width: 80px;">Item disc</th>
+                                    <th style="width: 80px;">Net total</th>
+                                    <th style="width: 200px;">Sales Man</th>
+                                    <th style="width: 120px;">Cost</th>
+                                    <th style="width: 120px;">Profit</th>
+                                    <th style="width: 120px;">Profit %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="inv" t-as="invc">
+                                    <tr>
+                                        <td style="width: 120px;">
+                                            <t t-esc="invc.get('cust_no')"/>
+                                        </td>
+                                        <td style="width: 20px;">
+                                            <span style="font-size:12px; max-width: 400px; word-wrap: break-word;">
+                                                <t t-esc="invc.get('partner_id_name')"/>
+                                            </span>
+                                        </td>
+                                        <td style="width: 120px;">
+                                            <t t-esc="invc.get('name')"/>
+                                        </td>
+                                        <td style="width: 80px;">
+                                            <t t-esc="invc.get('date')"/>
+                                        </td>
+
+                                        <td style="width: 120px; ">
+                                            <t t-esc="'{:.1f}'.format(invc.get('qty') * invc.get('price_unit'))"/>
+                                        </td>
+                                        <td style="width: 80px;">
+                                            <t t-esc="invc.get('disc')"/>
+                                        </td>
+                                        <td style="width: 80px;"></td>
+                                        <td style="width: 120px;">
+                                            <t t-esc="'{:.1f}'.format(invc.get('total'))"/>
+                                        </td>
+                                        <td style="width: 220px;">
+                                            <span style="font-size:12px; overflow: hidden; text-overflow: ellipsis;;">
+                                                <t t-esc="invc.get('salesperosn')"/>
+                                            </span>
+                                        </td>
+
+                                        <td style="width: 120px;">
+                                            <t t-esc="'{:.1f}'.format(invc.get('total_cost'))"/>
+                                        </td>
+                                        <td style="width: 120px;">
+                                            <t t-esc="'{:.1f}'.format(invc.get('profit'))"/>
+                                        </td>
+                                        <td style="width: 120px;">
+                                            <t t-esc="'{:.1f}'.format(invc.get('profit_perc'))"/>
+                                        </td>
+
+                                    </tr>
+                                </t>
+                                <t t-set="total_cost" t-value="sum(invc.get('total_cost') for invc in inv)"/>
+                                <t t-set="total_profit" t-value="sum(invc.get('profit') for invc in inv)"/>
+                                <tr>
+                                    <td colspan="8"></td>
+                                    <td>Total</td>
+                                    <td style="width: 2000px; white-space: nowrap;">
+                                        <t t-esc="'{:,.1f}'.format(total_cost)"/>
+                                    </td>
+
+                                    <td style="width: 200px; white-space: nowrap;">
+                                        <t t-esc="'{:,.1f}'.format(total_profit)"/>
+                                    </td>
+
+                                    <td style="width: 120px;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
